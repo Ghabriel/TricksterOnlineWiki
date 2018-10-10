@@ -1,3 +1,42 @@
-<p>
-    quest-data works!
-</p>
+<div *ngIf="!quest">Loading...</div>
+
+<div class="quest" *ngIf="quest" [ngSwitch]="quest.type">
+    <ng-container *ngSwitchCase="QuestType.Episode">
+        <div class="npc-image">[NPC image here]</div>
+        <div class="map-image">[Map image here]</div>
+        <div class="data">
+            <div class="npc">
+                <strong>NPC: </strong>
+                {{ quest.npcName }}
+            </div>
+            <div class="location">
+                <strong>Location: </strong>
+                {{ quest.location }}
+            </div>
+            <div class="base-exp">
+                <strong>Base Experience: </strong>
+                {{ quest.experience.base }}
+            </div>
+            <div class="tm-exp">
+                <strong>TM Experience: </strong>
+                {{ quest.experience.tm }}
+            </div>
+            <div class="request">
+                <strong>Request: </strong>
+                {{ quest.request }}
+            </div>
+            <div class="condition">
+                <strong>Condition: </strong>
+                {{ quest.condition }}
+            </div>
+            <div class="rewards">
+                <strong>Reward: </strong>
+                {{ quest.rewards.toString() }}
+            </div>
+            <div class="notes">
+                <strong>Notes: </strong>
+                {{ quest.notes }}
+            </div>
+        </div>
+    </ng-container>
+</div>
