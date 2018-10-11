@@ -2,7 +2,7 @@
     border: 1px solid #999;
     display: inline-block;
     width: 775px;
-    
+
     & > .header {
         border-bottom: 1px solid #999;
         font-size: 1.3rem;
@@ -14,7 +14,7 @@
         display: flex;
         flex-direction: row;
         padding: 5px 10px;
- 
+
         .npc-image {
             flex: 0 0 auto;
         }

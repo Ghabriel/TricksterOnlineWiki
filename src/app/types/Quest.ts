@@ -21,7 +21,7 @@ export interface BaseQuest {
     npcName: string;
     location: string;
     condition: string;
-    notes: string[];
+    notes: string;
     type: QuestType;
 }
 
