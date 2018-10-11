@@ -11,8 +11,9 @@ export function processQuests(): void {
     const rawData = getUnifiedRawData();
     const indexTable = buildIndexTable(rawData.quests);
     fillIdentifiers(rawData.quests, indexTable);
-    console.log(rawData);
-    console.log(indexTable);
+    // console.log(rawData);
+    // console.log(indexTable);
+    save(rawData.quests);
 }
 
 function getUnifiedRawData(): MinedQuestData {
@@ -55,8 +56,21 @@ function fillIdentifiers(questList: Quest[], indexTable: IndexTable): void {
 
         if (quest.type === QuestType.Episode) {
             if (quest.nextEpisodeQuest) {
-                quest.nextEpisodeQuest = indexTable.maps.get(quest.nextEpisodeQuest)! as unknown as string;
+                if (!indexTable.quests.has(quest.nextEpisodeQuest)) {
+                    throw Error(`"Next Episode Quest" not found: ${quest.nextEpisodeQuest}`);
+                }
+
+                quest.nextEpisodeQuest = indexTable.quests.get(quest.nextEpisodeQuest)! as unknown as string;
             }
         }
     }
+}
+
+function save(questList: Quest[]): void {
+    const content = 'export const quests = ' + JSON.stringify(questList);
+    fs.writeFile('../src/app/data/quests.ts', content, err => {
+        if (err) {
+            throw err;
+        }
+    });
 }
