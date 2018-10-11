@@ -1,0 +1,67 @@
+[
+    {
+        "npcImageUrls": [
+            "http://www.tricksterlover.info/Bwiki/asset.103.ggftw.net/wiki/to-w/images/e/e5/Heidi.gif"
+        ],
+        "mapImageUrls": [
+            "http://www.tricksterlover.info/Bwiki/asset.103.ggftw.net/wiki/to-w/images/b/b0/Coral_Town_-_Blooming_Cora.png"
+        ],
+        "quests": [
+            {
+                "id": 0,
+                "title": "Heidi - Trickster Registration",
+                "npcCoordinates": {
+                    "x": 40,
+                    "y": 90
+                },
+                "npcName": "Heidi",
+                "location": "Coral Town - Blooming Cora",
+                "condition": "Level 1+, have Registration Form",
+                "notes": "Notes:  Registration Form is obtained by talking to Heidi.",
+                "type": 3,
+                "experience": {
+                    "base": 256,
+                    "tm": 256
+                },
+                "request": "Find and talk to Bunny Maid",
+                "rewards": "Rookie Sword, Rookie Hat, Rookie Shield",
+                "startedChapter": {
+                    "episode": 0,
+                    "chapter": 1,
+                    "name": "The Start of an Adventure"
+                },
+                "nextEpisodeQuest": "Bunny Maid - Prove Your Spirit!"
+            }
+        ]
+    },
+    {
+        "npcImageUrls": [
+            "http://www.tricksterlover.info/Bwiki/asset.103.ggftw.net/wiki/to-w/images/6/64/Bunny_Maid.gif"
+        ],
+        "mapImageUrls": [
+            "http://www.tricksterlover.info/Bwiki/asset.103.ggftw.net/wiki/to-w/images/4/49/Coral_Beach_Field_1.png"
+        ],
+        "quests": [
+            {
+                "id": 0,
+                "title": "Bunny Maid - Prove Your Spirit!",
+                "npcCoordinates": {
+                    "x": 30,
+                    "y": 60
+                },
+                "npcName": "Bunny Maid",
+                "location": "Coral Town - Blooming Cora",
+                "condition": "Level 1+, have completed Heidi - Trickster Registration",
+                "notes": "Notes:  Baby Carrot is dropped by Torobbie (Lv.1).",
+                "type": 3,
+                "experience": {
+                    "base": 1374,
+                    "tm": 1374
+                },
+                "request": "2x Baby Carrot",
+                "rewards": "Level Up Guide, 2,000 Galder",
+                "nextEpisodeQuest": "Bunny Maid - Helping Others"
+            }
+        ]
+    }
+]

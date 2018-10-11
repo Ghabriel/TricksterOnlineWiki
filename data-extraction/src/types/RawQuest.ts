@@ -1,3 +1,9 @@
+export interface MinedQuestData {
+    npcImageUrls: string[];
+    mapImageUrls: string[];
+    quests: Quest[];
+}
+
 export type Quest = StandardQuest | MonsterQuest | PartyQuest | EpisodeQuest;
 export type StandardQuest = BaseQuest & StandardQuestExclusive;
 export type MonsterQuest = BaseQuest & MonsterQuestExclusive;
@@ -19,7 +25,7 @@ export interface BaseQuest {
         y: number;
     };
     npcName: string;
-    location: number;
+    location: string;
     condition: string;
     notes: string;
     type: QuestType;
@@ -69,8 +75,8 @@ export interface EpisodeQuestExclusive {
         base: number;
         tm: number;
     };
-    request: string[];
-    rewards: string[];
+    request: string;
+    rewards: string;
     startedChapter?: QuestChapter;
     completedChapter?: QuestChapter;
     nextEpisodeQuest?: string;
