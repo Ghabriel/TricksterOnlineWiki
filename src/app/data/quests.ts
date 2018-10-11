@@ -20,6 +20,12 @@ export const quests: Quest[] = [
         request: 'Find and talk to Bunny Maid',
         condition: 'Level 1+, have Registration Form',
         rewards: ['Rookie Sword', 'Rookie Hat', 'Rookie Shield'],
-        notes: ['Lorem ipsum dolor sit amet']
+        notes: 'Lorem ipsum dolor sit amet',
+        startedChapter: {
+            episode: 0,
+            chapter: 1,
+            name: 'The Start of an Adventure'
+        },
+        nextEpisodeQuest: 'Bunny Maid - Prove Your Spirit!'
     }
 ];

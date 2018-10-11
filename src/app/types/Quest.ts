@@ -73,10 +73,11 @@ export interface EpisodeQuestExclusive {
     rewards: string[];
     startedChapter?: QuestChapter;
     completedChapter?: QuestChapter;
-    nextEpisodeQuest?: number;
+    nextEpisodeQuest?: string;
 }
 
 export interface QuestChapter {
     episode: number;
     chapter: number;
+    name: string;
 }

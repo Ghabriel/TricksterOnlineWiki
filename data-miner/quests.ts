@@ -13,13 +13,12 @@ function searchQuests() {
     const quests: Quest[] = [];
     const npcImageUrls: string[] = [];
     const mapImageUrls: string[] = [];
+    enableConsole();
 
     for (const div of divs) {
         if (!isQuestPrelude(div)) {
             continue;
         }
-
-        console.log('[FOUND PRELUDE]', div);
 
         const quest: Partial<EpisodeQuest> = {};
         quest.title = getQuestTitle(div);
@@ -48,6 +47,8 @@ function searchQuests() {
             tm: parseInt(cellText(tableRows, 1, 1).replace('TM Experience: ', '').replace(/,/g, ''))
         };
 
+        parseEpisodeData(tableRows, quest);
+
         console.log(quest);
         break;
     }
@@ -55,7 +56,6 @@ function searchQuests() {
 
 function isQuestPrelude(div: HTMLDivElement): boolean {
     const prelude = '<div style="position:relative; width:775px;">';
-    console.log('[ATTEMPT]', div.outerHTML.substr(0, prelude.length));
     return div.outerHTML.substr(0, prelude.length) === prelude;
 }
 
@@ -78,4 +78,40 @@ function cell(rows: RowList, rowIndex: number, cellIndex: number): HTMLElement {
 
 function cellText(rows: RowList, rowIndex: number, cellIndex: number): string {
     return cell(rows, rowIndex, cellIndex).outerText;
+}
+
+function parseEpisodeData(tableRows: RowList, quest: EpisodeQuest): void {
+    const chapterStartRegex = /Episode ([0-9]+): Chapter ([0-9]+) - (.*?) has been started!/;
+    const chapterCompletedRegex = /Episode ([0-9]+): Chapter ([0-9]+) - (.*?) has been completed!/;
+    const episodeInfo = cell(tableRows, 4, 0).children as HTMLCollectionOf<HTMLTableCellElement>;
+
+    if (episodeInfo[0].style.display !== 'none') {
+        const chapterMatches = episodeInfo[0].outerText.match(chapterStartRegex);
+        quest.startedChapter = {
+            episode: parseInt(chapterMatches[1]),
+            chapter: parseInt(chapterMatches[2]),
+            name: chapterMatches[3]
+        };
+    }
+
+    if (episodeInfo[1].style.display !== 'none') {
+        const nextQuest = episodeInfo[1].outerText.replace('Next Quest in Episode: ', '').trim();
+        quest.nextEpisodeQuest = nextQuest;
+    }
+
+    if (episodeInfo[2].style.display !== 'none') {
+        const chapterMatches = episodeInfo[0].outerText.match(chapterCompletedRegex);
+        quest.completedChapter = {
+            episode: parseInt(chapterMatches[1]),
+            chapter: parseInt(chapterMatches[2]),
+            name: chapterMatches[3]
+        };
+    }
+}
+
+function enableConsole(): void {
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+    (window as any).console = iframe.contentWindow.console;
 }
