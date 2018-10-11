@@ -1,8 +1,11 @@
 import * as fs from 'fs';
+import { unifyRawQuests } from './unifier';
 
 function main(): void {
-    const rawQuestData = fs.readFileSync('../raw-data/quests.json');
-    console.log(rawQuestData);
+    const rawQuestJSON = fs.readFileSync('raw-data/quests.json').toString();
+    const rawQuestData = JSON.parse(rawQuestJSON);
+    const unifiedRawQuestData = unifyRawQuests(rawQuestData);
+    console.log(unifiedRawQuestData);
 }
 
 main();
