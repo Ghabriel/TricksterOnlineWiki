@@ -1,4 +1,4 @@
-import { EpisodeQuest, Quest } from 'src/app/types/Quest';
+import { EpisodeQuest, Quest, QuestType } from 'src/app/types/Quest';
 
 declare global {
     interface Element {
@@ -13,15 +13,11 @@ function searchQuests() {
     const quests: Quest[] = [];
     const npcImageUrls: string[] = [];
     const mapImageUrls: string[] = [];
-    enableConsole();
 
     for (const div of divs) {
         if (!isQuestPrelude(div)) {
             continue;
         }
-
-        const quest: Partial<EpisodeQuest> = {};
-        quest.title = getQuestTitle(div);
 
         const tableRows = getTableRows(div);
         npcImageUrls.push(getNpcImageUrl(tableRows));
@@ -29,29 +25,35 @@ function searchQuests() {
         const mapImageUrl = (mapElements[0].children[0] as HTMLImageElement).src;
         mapImageUrls.push(mapImageUrl);
         const circleDivStyle = (mapElements[1] as HTMLDivElement).style;
-        quest.npcCoordinates = {
-            x: parseInt(circleDivStyle.left.replace('px', '')),
-            y: parseInt(circleDivStyle.top.replace('px', ''))
-        };
 
-        quest.npcName = cellText(tableRows, 0, 2).replace('NPC: ', '');
-        quest.location = cellText(tableRows, 0, 3).replace('Location: ', '');
-        quest.condition = cellText(tableRows, 2, 1).replace('Condition: ', '');
         const notesContainer = cell(tableRows, 5, 0).children[0] as HTMLDivElement;
-        quest.notes = (notesContainer.style.display !== 'none')
-            ? notesContainer.outerText
-            : '';
 
-        quest.experience = {
-            base: parseInt(cellText(tableRows, 1, 0).replace('Base Experience: ', '').replace(/,/g, '')),
-            tm: parseInt(cellText(tableRows, 1, 1).replace('TM Experience: ', '').replace(/,/g, ''))
+        const quest: EpisodeQuest = {
+            id: 0,
+            title: getQuestTitle(div),
+            npcCoordinates: {
+                x: parseInt(circleDivStyle.left.replace('px', '')),
+                y: parseInt(circleDivStyle.top.replace('px', ''))
+            },
+            npcName: cellText(tableRows, 0, 2).replace('NPC: ', ''),
+            location: cellText(tableRows, 0, 3).replace('Location: ', ''),
+            condition: cellText(tableRows, 2, 1).replace('Condition: ', ''),
+            notes: (notesContainer.style.display !== 'none') ? notesContainer.outerText : '',
+            type: QuestType.Episode,
+            experience: {
+                base: parseInt(cellText(tableRows, 1, 0).replace('Base Experience: ', '').replace(/,/g, '')),
+                tm: parseInt(cellText(tableRows, 1, 1).replace('TM Experience: ', '').replace(/,/g, ''))
+            },
+            request: cellText(tableRows, 2, 0).replace('Request: ', ''),
+            rewards: cellText(tableRows, 3, 0).replace('Reward: ', '')
         };
 
         parseEpisodeData(tableRows, quest);
 
-        console.log(quest);
-        break;
+        quests.push(quest);
     }
+
+    return quests;
 }
 
 function isQuestPrelude(div: HTMLDivElement): boolean {
@@ -100,7 +102,7 @@ function parseEpisodeData(tableRows: RowList, quest: EpisodeQuest): void {
     }
 
     if (episodeInfo[2].style.display !== 'none') {
-        const chapterMatches = episodeInfo[0].outerText.match(chapterCompletedRegex);
+        const chapterMatches = episodeInfo[2].outerText.match(chapterCompletedRegex);
         quest.completedChapter = {
             episode: parseInt(chapterMatches[1]),
             chapter: parseInt(chapterMatches[2]),

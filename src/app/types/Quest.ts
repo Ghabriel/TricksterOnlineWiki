@@ -4,7 +4,7 @@ export type MonsterQuest = BaseQuest & MonsterQuestExclusive;
 export type PartyQuest = BaseQuest & PartyQuestExclusive;
 export type EpisodeQuest = BaseQuest & EpisodeQuestExclusive;
 
-export enum QuestType {
+export const enum QuestType {
     Standard,
     Monster,
     Party,
@@ -70,7 +70,7 @@ export interface EpisodeQuestExclusive {
         tm: number;
     };
     request: string;
-    rewards: string[];
+    rewards: string;
     startedChapter?: QuestChapter;
     completedChapter?: QuestChapter;
     nextEpisodeQuest?: string;
