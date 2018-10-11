@@ -15,7 +15,7 @@
                     "y": 90
                 },
                 "npcName": "Heidi",
-                "location": "Coral Town - Blooming Cora",
+                "map": "Coral Town - Blooming Cora",
                 "condition": "Level 1+, have Registration Form",
                 "notes": "Notes:  Registration Form is obtained by talking to Heidi.",
                 "type": 3,
@@ -50,7 +50,7 @@
                     "y": 60
                 },
                 "npcName": "Bunny Maid",
-                "location": "Coral Town - Blooming Cora",
+                "map": "Coral Town - Blooming Cora",
                 "condition": "Level 1+, have completed Heidi - Trickster Registration",
                 "notes": "Notes:  Baby Carrot is dropped by Torobbie (Lv.1).",
                 "type": 3,

@@ -40,9 +40,11 @@ function searchQuests() {
                 y: parseInt(circleDivStyle.top!.replace('px', ''))
             },
             npcName: cellText(tableRows, 0, 2).replace('NPC: ', ''),
-            location: cellText(tableRows, 0, 3).replace('Location: ', ''),
+            map: cellText(tableRows, 0, 3).replace('Location: ', ''),
             condition: cellText(tableRows, 2, 1).replace('Condition: ', ''),
-            notes: (notesContainer.style.display !== 'none') ? notesContainer.outerText : '',
+            notes: (notesContainer.style.display !== 'none')
+                ? notesContainer.outerText.replace('Notes: ', '').trim()
+                : '',
             type: QuestType.Episode,
             experience: {
                 base: parseInt(cellText(tableRows, 1, 0).replace('Base Experience: ', '').replace(/,/g, '')),

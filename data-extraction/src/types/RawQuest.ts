@@ -25,7 +25,7 @@ export interface BaseQuest {
         y: number;
     };
     npcName: string;
-    location: string;
+    map: string;
     condition: string;
     notes: string;
     type: QuestType;
