@@ -1,42 +1,63 @@
 <div *ngIf="!quest">Loading...</div>
 
 <div class="quest" *ngIf="quest" [ngSwitch]="quest.type">
-    <ng-container *ngSwitchCase="QuestType.Episode">
-        <div class="npc-image">[NPC image here]</div>
-        <div class="map-image">[Map image here]</div>
-        <div class="data">
-            <div class="npc">
-                <strong>NPC: </strong>
-                {{ quest.npcName }}
-            </div>
-            <div class="location">
-                <strong>Location: </strong>
-                {{ quest.location }}
-            </div>
-            <div class="base-exp">
-                <strong>Base Experience: </strong>
-                {{ quest.experience.base }}
-            </div>
-            <div class="tm-exp">
-                <strong>TM Experience: </strong>
-                {{ quest.experience.tm }}
-            </div>
-            <div class="request">
-                <strong>Request: </strong>
-                {{ quest.request }}
-            </div>
-            <div class="condition">
-                <strong>Condition: </strong>
-                {{ quest.condition }}
-            </div>
-            <div class="rewards">
-                <strong>Reward: </strong>
-                {{ quest.rewards.toString() }}
-            </div>
-            <div class="notes">
-                <strong>Notes: </strong>
-                {{ quest.notes }}
-            </div>
+    <div class="header">{{ quest.title }}</div>
+    <div class="content">
+        <div class="npc-image">
+            <img src="../../../assets/npc/Heidi.gif">
         </div>
-    </ng-container>
+
+        <div class="map-image">
+            <img src="../../../assets/maps/Coral_Town_-_Blooming_Cora.png">
+            <img src="../../../assets/marker.gif" class="marker" style="left: 40px; top: 90px">
+        </div>
+
+        <ng-container *ngSwitchCase="QuestType.Episode">
+            <div class="data">
+                <div class="row">
+                    <div>
+                        <strong>Condition: </strong>
+                        {{ quest.condition }}
+                    </div>
+                    <div class="location">
+                        <strong>Location: </strong>
+                        {{ quest.location }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="experience">
+                        <div class="header">Experience</div>
+                        <div class="content">
+                            <div class="section">
+                                <div class="value">{{ quest.experience.base }}</div>
+                                <div class="legend">Base</div>
+                            </div>
+                            <div class="section">
+                                <div class="value">{{ quest.experience.tm }}</div>
+                                <div class="legend">TM</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="request">
+                        <strong>Request: </strong>
+                        {{ quest.request }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div>
+                        <strong>Reward: </strong>
+                        {{ quest.rewards.join(', ') }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="notes">
+                        <strong>Notes: </strong>
+                        {{ quest.notes }}
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
 </div>

@@ -13,12 +13,13 @@ export enum QuestType {
 
 export interface BaseQuest {
     id: number;
+    title: string;
     npcCoordinates: {
         x: number;
         y: number;
     };
     npcName: string;
-    location: number;
+    location: string;
     condition: string;
     notes: string[];
     type: QuestType;
