@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import * as http from 'http';
 import { MinedQuestData, Quest, QuestType } from '../types/RawQuest';
 import { unifyRawQuests } from './unifier';
 
@@ -10,6 +11,8 @@ interface IndexTable {
 export function processQuests(): void {
     const rawData = getUnifiedRawData();
     const indexTable = buildIndexTable(rawData.quests);
+    downloadMapImages(rawData.mapImageUrls);
+    downloadNpcImages(rawData.npcImageUrls);
     fillIdentifiers(rawData.quests, indexTable);
     // console.log(rawData);
     // console.log(indexTable);
@@ -47,6 +50,33 @@ function generateMapId(): number {
 let nextQuestId: number = 1;
 function generateQuestId(): number {
     return nextQuestId++;
+}
+
+function downloadMapImages(imageUrls: string[]): void {
+    downloadImages(imageUrls, '../src/assets/maps/');
+}
+
+function downloadNpcImages(imageUrls: string[]): void {
+    downloadImages(imageUrls, '../src/assets/npc/');
+}
+
+function downloadImages(imageUrls: string[], outputFolder: string): void {
+    for (const url of imageUrls) {
+        const urlParts = url.split('/');
+        const fileName = urlParts[urlParts.length - 1];
+        const outputFileName = outputFolder + fileName;
+
+        fs.exists(outputFileName, exists => {
+            if (!exists) {
+                console.log('[DOWNLOAD]', fileName);
+                const outputFileStream = fs.createWriteStream(outputFileName);
+
+                http.get(url, response => {
+                    response.pipe(outputFileStream);
+                });
+            }
+        });
+    }
 }
 
 function fillIdentifiers(questList: Quest[], indexTable: IndexTable): void {

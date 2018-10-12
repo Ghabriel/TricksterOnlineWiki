@@ -4,24 +4,24 @@
     <div class="header">{{ quest.title }}</div>
     <div class="content">
         <div class="npc-image">
-            <img src="../../../assets/npc/Heidi.gif">
+            <img src="../../../assets/npc/{{ questNpcPath }}">
         </div>
 
         <div class="map-image">
-            <img src="../../../assets/maps/Coral_Town_-_Blooming_Cora.png">
+            <img src="../../../assets/maps/{{ questMapPath }}">
             <img src="../../../assets/marker.gif" class="marker" style="left: 40px; top: 90px">
         </div>
 
         <ng-container *ngSwitchCase="QuestType.Episode">
             <div class="data">
                 <div class="row">
-                    <div>
+                    <div class="condition">
                         <strong>Condition: </strong>
                         {{ quest.condition }}
                     </div>
                     <div class="location">
                         <strong>Location: </strong>
-                        {{ quest.location }}
+                        {{ quest.map }}
                     </div>
                 </div>
                 <div class="row">
@@ -48,7 +48,7 @@
                 <div class="row">
                     <div>
                         <strong>Reward: </strong>
-                        {{ quest.rewards.join(', ') }}
+                        {{ quest.rewards }}
                     </div>
                 </div>
                 <div class="row">
